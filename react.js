@@ -43,8 +43,10 @@
 // JSX  - язык, который позволяет писать html внутри скрипта js
 
 // ________________
-// Компонента - ф-ция, возвращающая разметку jsx
+// Компонента - ф-ция, принимает пропсы и возвращающая разметку jsx
 // создавая компоненту, мы как бы создаем тег
+
+// пропсы-входящие данные, задаваемые как атрибуты тега
 
 // компонента App:
 const App = () => {
@@ -70,10 +72,60 @@ const App = () => {
 
 // 1. назвать css файл как Name.module.css
 // 2. импортировать как класс : import s from './Name.module.css'
-        // тогда s это объект типа
-        // class : 'Name_class__randomNumbers'
+// тогда s это объект типа
+// class : 'Name_class__randomNumbers'
 
 // 3. в разметку писать className={s.class}
 
 // _______________
 
+// Route
+
+// route - это "слушатель" адресной строки. заменяет содержимое на нужное
+
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+const Appp = () => {
+    return (
+        // обязательная обертка всего App:
+        <BrowserRouter>
+            <div className="app__wrapper">
+                {/* ... */}
+                {/* место, где будет меняться контент согласно добавочной строке с ссылке*/}
+                <div className='app__wrapper_content'>
+                    {/* обязательная обертка для вариантов замены контента */}
+                    {/* в Routes дочерними могут быть только Route*/}
+                    <Routes>
+                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/dialogs" element={<Dialogs />} />
+                    </Routes>
+                </div>
+            </div>
+        </BrowserRouter>
+    )
+}
+
+// _____________________
+
+// NavLink
+
+// NavLink - замена <a> в реакте, которая сама отменяет перезагрузку страницы
+// to = href, но только обрезанному по добавочной строке
+
+import { NavLink } from "react-router-dom";
+
+<div className={classes.nav__menu}>
+    <NavLink to="/">Main page</NavLink>
+    <NavLink to="/music">Music</NavLink>
+    {/*         ->to http://localhost:3000/music */}
+</div>
+
+// автоматически ставит класс 'active' на активную ссылку (с сss модулем запара)
+
+// неидеальное решение:
+// className = {(state) => state.isActive ?
+//     `${s.navlink} ${s.active}` : `${s.navlink}`}>
+
+// activeClassName - атрибут, который должен задавать класс активной ...
+//                  но не задает...
+
+// _____________________
